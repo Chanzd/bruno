@@ -1,9 +1,8 @@
-
-
 import 'dart:math';
 
 import 'package:bruno/src/components/form/base/brn_form_item_type.dart';
 import 'package:bruno/src/components/form/utils/brn_form_util.dart';
+import 'package:bruno/src/l10n/brn_intl.dart';
 import 'package:bruno/src/theme/brn_theme_configurator.dart';
 import 'package:bruno/src/theme/configs/brn_form_config.dart';
 import 'package:bruno/src/utils/brn_tools.dart';
@@ -64,7 +63,7 @@ class BrnTextSelectFormItem extends StatefulWidget {
   final VoidCallback? onTap;
 
   /// 录入项 hint 提示
-  final String hint;
+  final String? hint;
 
   /// 录入项 值
   final String? value;
@@ -91,17 +90,17 @@ class BrnTextSelectFormItem extends StatefulWidget {
   BrnTextSelectFormItem({
     Key? key,
     this.label,
-    this.title: "",
+    this.title = "",
     this.subTitle,
     this.tipLabel,
-    this.prefixIconType: BrnPrefixIconType.normal,
-    this.error: "",
-    this.isEdit: true,
-    this.isRequire: false,
+    this.prefixIconType = BrnPrefixIconType.normal,
+    this.error = "",
+    this.isEdit = true,
+    this.isRequire = false,
     this.onAddTap,
     this.onRemoveTap,
     this.onTip,
-    this.hint: "请选择",
+    this.hint,
     this.value,
     this.valueMaxLines = 1,
     this.titleMaxLines,
@@ -115,24 +114,25 @@ class BrnTextSelectFormItem extends StatefulWidget {
         .getConfig(configId: this.themeData!.configId)
         .formItemConfig
         .merge(this.themeData);
-    this.themeData = this.themeData!.merge(
-        BrnFormItemConfig(backgroundColor: backgroundColor));
+    this.themeData = this
+        .themeData!
+        .merge(BrnFormItemConfig(backgroundColor: backgroundColor));
   }
 
   BrnTextSelectFormItem.autoLayout(
       {Key? key,
       this.label,
-      this.title: "",
+      this.title = "",
       this.subTitle,
       this.tipLabel,
-      this.prefixIconType: BrnPrefixIconType.normal,
-      this.error: "",
-      this.isEdit: true,
-      this.isRequire: false,
+      this.prefixIconType = BrnPrefixIconType.normal,
+      this.error = "",
+      this.isEdit = true,
+      this.isRequire = false,
       this.onAddTap,
       this.onRemoveTap,
       this.onTip,
-      this.hint: "请选择",
+      this.hint,
       this.value,
       this.valueMaxLines = 1,
       this.titleMaxLines,
@@ -147,8 +147,9 @@ class BrnTextSelectFormItem extends StatefulWidget {
         .getConfig(configId: this.themeData!.configId)
         .formItemConfig
         .merge(this.themeData);
-    this.themeData = this.themeData!.merge(
-        BrnFormItemConfig(backgroundColor: backgroundColor));
+    this.themeData = this
+        .themeData!
+        .merge(BrnFormItemConfig(backgroundColor: backgroundColor));
   }
 
   @override
@@ -210,8 +211,8 @@ class BrnTextSelectFormItemState extends State<BrnTextSelectFormItem> {
         children: <Widget>[
           Flexible(
             child: Container(
-              padding: BrnFormUtil.titleEdgeInsets(widget.prefixIconType,
-                  widget.isRequire, widget.themeData!),
+              padding: BrnFormUtil.titleEdgeInsets(
+                  widget.prefixIconType, widget.isRequire, widget.themeData!),
               child: Row(
                 children: <Widget>[
                   BrnFormUtil.buildPrefixIcon(
@@ -326,8 +327,8 @@ class BrnTextSelectFormItemState extends State<BrnTextSelectFormItem> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
-          padding: BrnFormUtil.titleEdgeInsets(widget.prefixIconType,
-              widget.isRequire, widget.themeData!),
+          padding: BrnFormUtil.titleEdgeInsets(
+              widget.prefixIconType, widget.isRequire, widget.themeData!),
           child: Row(
             children: <Widget>[
               BrnFormUtil.buildPrefixIcon(widget.prefixIconType, widget.isEdit,
@@ -369,7 +370,8 @@ class BrnTextSelectFormItemState extends State<BrnTextSelectFormItem> {
           textDirection: TextDirection.ltr,
           strutStyle: _contentStructStyle,
           text: TextSpan(
-            text: widget.hint,
+            text: widget.hint ??
+                BrnIntl.of(context).localizedResource.pleaseChoose,
             style: BrnFormUtil.getHintTextStyle(widget.themeData!, height: 1),
           ));
     }
@@ -392,7 +394,7 @@ class BrnTextSelectFormItemState extends State<BrnTextSelectFormItem> {
       );
     } else {
       return Text(
-        widget.hint,
+        widget.hint ?? BrnIntl.of(context).localizedResource.pleaseChoose,
         textAlign: TextAlign.end,
         strutStyle: _contentStructStyle,
         style: BrnFormUtil.getHintTextStyle(widget.themeData!, height: 1),
@@ -401,11 +403,11 @@ class BrnTextSelectFormItemState extends State<BrnTextSelectFormItem> {
   }
 
   String getCalculateText() {
-    String value = '请选择';
+    String value = BrnIntl.of(context).localizedResource.pleaseChoose;
     if (!BrunoTools.isEmpty(widget.value)) {
       value = widget.value!;
     } else if (!BrunoTools.isEmpty(widget.hint)) {
-      value = widget.hint;
+      value = widget.hint ?? BrnIntl.of(context).localizedResource.pleaseChoose;
     }
     return value;
   }

@@ -1,7 +1,6 @@
-
-
 import 'package:bruno/src/components/form/base/brn_form_item_type.dart';
 import 'package:bruno/src/components/form/utils/brn_form_util.dart';
+import 'package:bruno/src/l10n/brn_intl.dart';
 import 'package:bruno/src/theme/brn_theme_configurator.dart';
 import 'package:bruno/src/theme/configs/brn_form_config.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +60,7 @@ class BrnRatioInputFormItem extends StatefulWidget {
   final VoidCallback? onTip;
 
   ///内容
-  final String hint;
+  final String? hint;
 
   /// 输入内容类型
   final String? inputType;
@@ -80,18 +79,18 @@ class BrnRatioInputFormItem extends StatefulWidget {
   BrnRatioInputFormItem(
       {Key? key,
       this.label,
-      this.title: "",
+      this.title = "",
       this.subTitle,
       this.tipLabel,
-      this.prefixIconType: BrnPrefixIconType.normal,
-      this.error: "",
-      this.isEdit: true,
-      this.isRequire: false,
-      this.isPrefixIconEnabled: false,
+      this.prefixIconType = BrnPrefixIconType.normal,
+      this.error = "",
+      this.isEdit = true,
+      this.isRequire = false,
+      this.isPrefixIconEnabled = false,
       this.onAddTap,
       this.onRemoveTap,
       this.onTip,
-      this.hint: "请输入",
+      this.hint,
       this.inputType,
       this.controller,
       this.inputFormatters,
@@ -104,8 +103,9 @@ class BrnRatioInputFormItem extends StatefulWidget {
         .getConfig(configId: this.themeData!.configId)
         .formItemConfig
         .merge(this.themeData);
-    this.themeData = this.themeData!.merge(
-        BrnFormItemConfig(backgroundColor: backgroundColor));
+    this.themeData = this
+        .themeData!
+        .merge(BrnFormItemConfig(backgroundColor: backgroundColor));
   }
 
   @override
@@ -180,7 +180,8 @@ class BrnRatioInputFormItemState extends State<BrnRatioInputFormItem> {
                           border: InputBorder.none,
                           hintStyle:
                               BrnFormUtil.getHintTextStyle(widget.themeData!),
-                          hintText: widget.hint,
+                          hintText: widget.hint ??
+                              BrnIntl.of(context).localizedResource.pleaseEnter,
                           counterText: "",
                           contentPadding: EdgeInsets.all(0),
                           isDense: true,

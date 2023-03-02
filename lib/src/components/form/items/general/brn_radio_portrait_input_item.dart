@@ -1,5 +1,9 @@
-import 'package:bruno/bruno.dart';
+import 'package:bruno/src/components/form/base/brn_form_item_type.dart';
+import 'package:bruno/src/components/form/base/input_item_interface.dart';
 import 'package:bruno/src/components/form/utils/brn_form_util.dart';
+import 'package:bruno/src/components/line/brn_line.dart';
+import 'package:bruno/src/components/radio/brn_radio_button.dart';
+import 'package:bruno/src/theme/brn_theme.dart';
 import 'package:flutter/material.dart';
 
 ///
@@ -71,13 +75,13 @@ class BrnRadioPortraitInputFormItem extends StatefulWidget {
   BrnRadioPortraitInputFormItem(
       {Key? key,
       this.label,
-      this.title: "",
+      this.title = "",
       this.subTitle,
       this.tipLabel,
-      this.prefixIconType: BrnPrefixIconType.normal,
-      this.error: "",
-      this.isEdit: true,
-      this.isRequire: false,
+      this.prefixIconType = BrnPrefixIconType.normal,
+      this.error = "",
+      this.isEdit = true,
+      this.isRequire = false,
       this.onAddTap,
       this.onRemoveTap,
       this.onTip,
@@ -93,8 +97,9 @@ class BrnRadioPortraitInputFormItem extends StatefulWidget {
         .getConfig(configId: this.themeData!.configId)
         .formItemConfig
         .merge(this.themeData);
-    this.themeData = this.themeData!.merge(
-        BrnFormItemConfig(backgroundColor: backgroundColor));
+    this.themeData = this
+        .themeData!
+        .merge(BrnFormItemConfig(backgroundColor: backgroundColor));
   }
 
   @override

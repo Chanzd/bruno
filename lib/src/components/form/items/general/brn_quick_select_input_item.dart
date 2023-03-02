@@ -1,7 +1,6 @@
-
-
 import 'package:bruno/src/components/form/base/brn_form_item_type.dart';
 import 'package:bruno/src/components/form/utils/brn_form_util.dart';
+import 'package:bruno/src/l10n/brn_intl.dart';
 import 'package:bruno/src/theme/brn_theme_configurator.dart';
 import 'package:bruno/src/theme/configs/brn_form_config.dart';
 import 'package:bruno/src/constants/brn_fonts_constants.dart';
@@ -63,7 +62,7 @@ class BrnTextQuickSelectFormItem extends StatefulWidget {
   final ValueChanged<int>? onBtnSelectChanged;
 
   /// 录入项 hint 提示
-  final String hint;
+  final String? hint;
 
   /// 录入项 值
   String? value;
@@ -91,23 +90,23 @@ class BrnTextQuickSelectFormItem extends StatefulWidget {
   BrnTextQuickSelectFormItem(
       {Key? key,
       this.label,
-      this.title: "",
+      this.title = "",
       this.subTitle,
       this.tipLabel,
-      this.prefixIconType: BrnPrefixIconType.normal,
-      this.error: "",
-      this.isEdit: true,
-      this.isRequire: false,
+      this.prefixIconType = BrnPrefixIconType.normal,
+      this.error = "",
+      this.isEdit = true,
+      this.isRequire = false,
       this.onAddTap,
       this.onRemoveTap,
       this.onTip,
-      this.hint: "请选择",
+      this.hint,
       this.value,
       this.btnsTxt,
       this.selectBtnList,
       this.enableBtnList,
       this.btns,
-      this.isBtnsScroll: false,
+      this.isBtnsScroll = false,
       this.onTap,
       this.onBtnSelectChanged,
       this.backgroundColor,
@@ -118,8 +117,9 @@ class BrnTextQuickSelectFormItem extends StatefulWidget {
         .getConfig(configId: themeData!.configId)
         .formItemConfig
         .merge(themeData);
-    this.themeData = this.themeData!.merge(
-        BrnFormItemConfig(backgroundColor: backgroundColor));
+    this.themeData = this
+        .themeData!
+        .merge(BrnFormItemConfig(backgroundColor: backgroundColor));
   }
 
   @override
@@ -230,7 +230,7 @@ class BrnTextQuickSelectFormItemState
       );
     } else {
       return Text(
-        widget.hint,
+        widget.hint ?? BrnIntl.of(context).localizedResource.pleaseChoose,
         textAlign: TextAlign.end,
         style: BrnFormUtil.getHintTextStyle(widget.themeData!),
       );
@@ -310,7 +310,7 @@ class QuickButtonsState extends State<QuickButtonsWidget> {
 
   Widget getQuickButtons() {
     if (!widget.isEdit) {
-      return Container();
+      return const SizedBox.shrink();
     }
 
     if (widget.btns != null) {

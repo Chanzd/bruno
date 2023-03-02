@@ -8,10 +8,17 @@ class BrnDialItem {
   /// 刻度标志样式
   TextStyle? dialTextStyle;
 
+  /// 刻度选中样式
+  TextStyle? selectedDialTextStyle;
+
   /// x,y 轴刻度值。用于刻度在坐标的真实定位
   double value;
 
-  BrnDialItem({this.dialText, this.dialTextStyle, required this.value});
+  BrnDialItem(
+      {this.dialText,
+      this.dialTextStyle,
+      this.selectedDialTextStyle,
+      required this.value});
 }
 
 class BrnPointData {
@@ -41,7 +48,7 @@ class BrnPointData {
       this.offset = const Offset(0, 0),
       this.pointText,
       this.pointTextStyle,
-      this.isClickable: true,
+      this.isClickable = true,
       required this.lineTouchData}) {
     pointText ??= '$y';
     pointTextStyle ??= TextStyle(
@@ -69,7 +76,7 @@ class BrnLineTouchData {
 
   BrnLineTouchData({
     required this.tipWindowSize,
-    this.tipOffset: const Offset(0, 0),
+    this.tipOffset = const Offset(0, 0),
     this.onTouch,
   });
 }
@@ -101,6 +108,7 @@ class BrnPointsLine {
   double? pointInnerRadius;
 
   /// 是否显示x轴的文字，用来处理多个线条绘制的时候，同一x轴坐标不需要绘制多次，则只需要将多条线中一个标记绘制即可
+  @Deprecated('该字段废弃，X刻度是否绘制由 [BrnBrokenLine.isShowXDial]')
   bool isShowXDial;
 
   /// 标记是否为曲线
@@ -121,7 +129,7 @@ class BrnPointsLine {
       this.pointInnerColor,
       this.isCurve = false,
       required this.points,
-      this.isShowPoint: true,
+      this.isShowPoint = true,
       this.isShowPointText = false,
       this.shaderColors,
       this.lineColor = Colors.purple}) {

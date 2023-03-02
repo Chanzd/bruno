@@ -9,10 +9,10 @@ import 'package:bruno/src/components/selection/widget/brn_selection_animate_widg
 import 'package:bruno/src/components/selection/widget/brn_selection_list_widget.dart';
 import 'package:bruno/src/components/selection/widget/brn_selection_menu_item_widget.dart';
 import 'package:bruno/src/components/selection/widget/brn_selection_range_widget.dart';
+import 'package:bruno/src/l10n/brn_intl.dart';
 import 'package:bruno/src/theme/configs/brn_selection_config.dart';
 import 'package:bruno/src/utils/brn_event_bus.dart';
 import 'package:bruno/src/utils/brn_tools.dart';
-import 'package:bruno/src/utils/i18n/brn_date_picker_i18n.dart';
 import 'package:flutter/material.dart';
 
 typedef BrnOnMenuItemClick = bool Function(int index);
@@ -230,7 +230,7 @@ class _BrnSelectionMenuWidgetState extends State<BrnSelectionMenuWidget> {
                     BrnSelectionFilterType.customHandle) {
               /// 创建 筛选组件的的入口
               OverlayEntry entry = _createEntry(widget.data[index]);
-              Overlay.of(widget.context)?.insert(entry);
+              Overlay.of(widget.context).insert(entry);
 
               listViewController.entry = entry;
               listViewController.show(index);
@@ -475,7 +475,7 @@ class _BrnSelectionMenuWidgetState extends State<BrnSelectionMenuWidget> {
           list[0].customMap!['min']);
       if (minDate != null) {
         minDateTime = DateTimeFormatter.formatDate(
-            minDate, 'yyyy年MM月dd日', DateTimePickerLocale.zh_cn);
+            minDate, BrnIntl.of(context).localizedResource.dateFormate_yyyy_MM_dd);
       }
     }
     if (list[0].customMap != null &&
@@ -485,7 +485,7 @@ class _BrnSelectionMenuWidgetState extends State<BrnSelectionMenuWidget> {
           list[0].customMap!['max']);
       if (maxDate != null) {
         maxDateTime = DateTimeFormatter.formatDate(
-            maxDate, 'yyyy年MM月dd日', DateTimePickerLocale.zh_cn);
+            maxDate, BrnIntl.of(context).localizedResource.dateFormate_yyyy_MM_dd);
       }
     }
     return '$minDateTime-$maxDateTime';
@@ -497,8 +497,7 @@ class _BrnSelectionMenuWidgetState extends State<BrnSelectionMenuWidget> {
     title = msDateTime != null
         ? DateTimeFormatter.formatDate(
             DateTime.fromMillisecondsSinceEpoch(msDateTime),
-            'yyyy年MM月dd日',
-            DateTimePickerLocale.zh_cn)
+            BrnIntl.of(context).localizedResource.dateFormate_yyyy_MM_dd)
         : list[0].title;
     return title;
   }
